@@ -14,7 +14,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("/content/drive/MyDrive/netflix_titles.csv")
+    df = pd.read_csv("netflix_titles.csv")
     df = df[df['type'] == 'Movie'].dropna(subset=['title', 'description'])
     df = df.reset_index(drop=True)
     return df
