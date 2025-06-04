@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from googletrans import Translator
+
+translator = Translator()
 
 @st.cache_data
 def load_data():
@@ -44,7 +47,9 @@ if user_input:
         st.subheader("🔎 추천 결과")
         results = recommend(selected_title, df, similarity_matrix)
         for _, row in results.iterrows():
+            translated_desc = translator.translate(row['description'], dest='ko').text
+            translated_genre = translator.translate(row['listed_in'], dest='ko').text
             st.markdown(f"**🎬 {row['title']}**")
-            st.caption(f"장르: {row['listed_in']}")
-            st.write(row['description'])
+            st.caption(f"장르: {translated_genre}")
+            st.write(translated_desc)
             st.markdown("---")
